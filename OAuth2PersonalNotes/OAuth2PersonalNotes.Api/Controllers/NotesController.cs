@@ -1,55 +1,78 @@
-﻿using System.Data.Entity;
+﻿using System;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using OAuth2PersonalNotes.Api.Models;
+using OAuth2PersonalNotes.Share.DTO;
 
 namespace OAuth2PersonalNotes.Api.Controllers
 {
+    //[Authorize]
     [RoutePrefix("api/Notes")]
     public class NotesController : ApiController
     {
         private readonly NotesDbContext db = new NotesDbContext();
 
-        [HttpGet]
-        [Route("")]
-        public IQueryable<PersonalNote> GetPersonalNotes()
+        public NotesController()
         {
-            return db.PersonalNotes;
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<PersonalNote, DtoNote>();
+                cfg.CreateMap<DtoNote, PersonalNote>();
+            });
         }
 
         [HttpGet]
-        [Route("{id:int}",Name = "GetById")]
-        [ResponseType(typeof(PersonalNote))]
+        [Route("")]
+        public IQueryable<DtoNote> GetPersonalNotes()
+        {
+            return db.PersonalNotes.ProjectTo<DtoNote>(Mapper.Configuration);
+        }
+
+        [HttpGet]
+        [Route("{id:int}", Name = "GetById")]
+        [ResponseType(typeof(DtoNote))]
         public async Task<IHttpActionResult> GetPersonalNote(int id)
         {
-            var personalnote = await db.PersonalNotes.FindAsync(id);
-            if (personalnote == null)
+            var personalNote = await db.PersonalNotes.FindAsync(id);
+            if(personalNote == null)
             {
                 return NotFound();
             }
-
-            return Ok(personalnote);
+            var result = Mapper.Map<DtoNote>(personalNote);
+            return Ok(result);
         }
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IHttpActionResult> PutPersonalNote(int id, PersonalNote personalnote)
+        public async Task<IHttpActionResult> PutPersonalNote(int id, DtoNote note)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != personalnote.Id)
+            if (id != note.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(personalnote).State = EntityState.Modified;
+            var personalNote = await db.PersonalNotes.FindAsync(id);
+            if (personalNote == null)
+            {
+                return NotFound();
+            }
+
+            personalNote.Name = note.Name;
+            personalNote.Description = note.Description;
+            personalNote.IsDone = note.IsDone;
+            personalNote.ReminderDate = note.ReminderDate;
+            personalNote.UpdatedOn = DateTime.UtcNow;
 
             try
             {
@@ -66,29 +89,31 @@ namespace OAuth2PersonalNotes.Api.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpPost]
         [Route("")]
-        [ResponseType(typeof(PersonalNote))]
-        public async Task<IHttpActionResult> PostPersonalNote(PersonalNote personalnote)
+        [ResponseType(typeof(DtoNote))]
+        public async Task<IHttpActionResult> PostPersonalNote(DtoNote note)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.PersonalNotes.Add(personalnote);
+            var personalNote = Mapper.Map<PersonalNote>(note);
+            personalNote.CreatedBy = "cuongduongduy@sample.com";
+            personalNote.CreatedOn = DateTime.UtcNow;
+            db.PersonalNotes.Add(personalNote);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("GetById", new { id = personalnote.Id }, personalnote);
+            note.Id = personalNote.Id;
+            return CreatedAtRoute("GetById", new { id = note.Id }, note);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        [ResponseType(typeof(PersonalNote))]
         public async Task<IHttpActionResult> DeletePersonalNote(int id)
         {
             var personalnote = await db.PersonalNotes.FindAsync(id);
@@ -100,7 +125,7 @@ namespace OAuth2PersonalNotes.Api.Controllers
             db.PersonalNotes.Remove(personalnote);
             await db.SaveChangesAsync();
 
-            return Ok(personalnote);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

@@ -5,10 +5,8 @@ namespace OAuth2PersonalNotes.Api
 {
     public class Global : HttpApplication
     {
-
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
 }

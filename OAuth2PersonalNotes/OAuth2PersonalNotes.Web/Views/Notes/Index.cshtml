@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OAuth2PersonalNotes.Share.DTO.DtoNote>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <h1>Notes</h1>
+    <div class="leftMarginDefault bottomMarginDefault">@Html.ActionLink("Add a note", "Create", "Notes", new { @class = "btn btn-success" })</div>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var pannelClassName = item.ReminderDate > DateTime.UtcNow ? "panel panel-info" : "panel panel-warning";
+        <div class="col-md-4">
+            <div class="@pannelClassName">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@item.Name</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-3">
+                        @if (item.ReminderDate.Date == DateTime.UtcNow.Date && !item.IsDone)
+                        {
+                            <i class="fa fa-exclamation-triangle fa-3x fa-color-orange" title="Not done today"></i>
+                        }
+                        @if (item.ReminderDate.Date < DateTime.UtcNow.Date && !item.IsDone)
+                        {
+                            <i class="fa fa-exclamation-triangle fa-3x fa-color-red" title="Not done in past"></i>
+                        }
+                    </div>
+                    <div class="col-sm-9">
+                        @item.Description
+                    </div>
+
+                </div>
+                <div class="panel panel-footer clearfix">
+                    <div class="col-md-5">
+                        <strong>@item.ReminderDate.Date.ToString("dd/MM/yy")</strong>
+                    </div>
+
+                    <div class="col-md-7">
+                        @if (!item.IsDone)
+                        {
+                            @Html.ActionLink("Done", "MakeNoteDone", new { id = item.Id }, new { @class = "btn btn-sm btn-primary" })
+                        }
+
+                        @Html.Raw(" | ")
+
+                        @Html.ActionLink("Edit", "Edit", "Notes", new { id = item.Id }, new { @class = "btn btn-sm btn-warning" })
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
