@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E8070DC9-FB08-4CFF-B317-FA1CBE323E39}</ProjectGuid>
+    <ProjectGuid>{1F22C0CB-2BC8-4B4C-AFCE-938A6405478A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OAuth2PersonalNotes.Share</RootNamespace>
-    <AssemblyName>OAuth2PersonalNotes.Share</AssemblyName>
+    <RootNamespace>OAuth2PersonalNotes.DTO</RootNamespace>
+    <AssemblyName>OAuth2PersonalNotes.DTO</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
+    <Compile Include="DtoEditNote.cs" />
+    <Compile Include="DtoNote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

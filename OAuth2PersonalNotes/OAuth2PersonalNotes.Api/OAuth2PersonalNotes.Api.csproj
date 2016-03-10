@@ -15,7 +15,7 @@
     <AssemblyName>OAuth2PersonalNotes.Api</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44307</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -149,6 +149,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OAuth2PersonalNotes.DTO\OAuth2PersonalNotes.DTO.csproj">
+      <Project>{1F22C0CB-2BC8-4B4C-AFCE-938A6405478A}</Project>
+      <Name>OAuth2PersonalNotes.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OAuth2PersonalNotes.Share\OAuth2PersonalNotes.Share.csproj">
       <Project>{e8070dc9-fb08-4cff-b317-fa1cbe323e39}</Project>
       <Name>OAuth2PersonalNotes.Share</Name>
@@ -169,7 +173,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27477</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:27477/</IISUrl>
+          <IISUrl>https://localhost:44307/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

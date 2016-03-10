@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using OAuth2PersonalNotes.Share.DTO;
+using OAuth2PersonalNotes.DTO;
 using OAuth2PersonalNotes.Web.Helpers;
 
 namespace OAuth2PersonalNotes.Web.Controllers

@@ -70,8 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Certificates\OAuth2PersonalNotes.cer" />
-    <Content Include="Certificates\OAuth2PersonalNotes.pfx" />
+    <Content Include="Certificates\DevRoot.cer" />
+    <Content Include="Certificates\idsrv3test.cer" />
+    <Content Include="Certificates\idsrv3test.pfx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

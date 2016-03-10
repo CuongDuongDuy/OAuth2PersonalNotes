@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OAuth2PersonalNotes.Share.DTO
+namespace OAuth2PersonalNotes.DTO
 {
     public class DtoEditNote
     {

@@ -19,7 +19,7 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                 ,
                 new InMemoryUser
                 {
-                    Username = "CuongDuong",
+                    Username = "Sven",
                     Password = "secret",
                     Subject = "bb61e881-3a49-42a7-8b62-c13dbe102018"
                 }

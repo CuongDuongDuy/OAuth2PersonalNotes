@@ -2,9 +2,9 @@
 {
     public class Constants
     {
-        public const string NotesApi = "http://localhost:27477/";
-        public const string NotesMvc = "http://localhost:16538/";
-        public const string NotesMvcstsCallback = "http://localhost:16538/stscallback";
+        public const string NotesApi = "https://localhost:44307/";
+        public const string NotesMvc = "https://localhost:44306/";
+        public const string NotesMvcstsCallback = "https://localhost:44306/stscallback";
         public const string NotesAngular = "https://localhost:44316/";
 
         public const string NotesClientSecret = "myrandomclientsecret";

@@ -8,11 +8,11 @@ using System.Web.Http.Description;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using OAuth2PersonalNotes.Api.Models;
-using OAuth2PersonalNotes.Share.DTO;
+using OAuth2PersonalNotes.DTO;
 
 namespace OAuth2PersonalNotes.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/Notes")]
     public class NotesController : ApiController
     {
