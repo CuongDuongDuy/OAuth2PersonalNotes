@@ -15,18 +15,18 @@ namespace OAuth2PersonalNotes.Web.Controllers
         {
             var httpClient = NotesHttpClient.GetClient();
 
-            var reponse = await httpClient.GetAsync("api/notes").ConfigureAwait(false);
+            var response = await httpClient.GetAsync("api/notes").ConfigureAwait(false);
 
-            if (reponse.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                var stringContent = await reponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var stringContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var notes = JsonConvert.DeserializeObject<IList<DtoNote>>(stringContent).OrderBy(x=>x.ReminderDate);
+                var notes = JsonConvert.DeserializeObject<IList<Note>>(stringContent).OrderBy(x=>x.ReminderDate);
 
                 return View(notes);
             }
             return View("Error",
-                new HandleErrorInfo(ExceptionHelper.GetExceptionFromResponse(reponse),
+                new HandleErrorInfo(ExceptionHelper.GetExceptionFromResponse(response),
                     "Notes", "Index"));
         }
 
@@ -38,7 +38,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(DtoNote note)
+        public async Task<ActionResult> Create(Note note)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +71,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
             {
                 var stringContent = await reponse.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var note = JsonConvert.DeserializeObject<DtoEditNote>(stringContent);
+                var note = JsonConvert.DeserializeObject<EditNote>(stringContent);
 
                 return View(note);
             }
@@ -81,7 +81,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, DtoEditNote note)
+        public async Task<ActionResult> Edit(int id, EditNote note)
         {
             var httpClient = NotesHttpClient.GetClient();
             var stringContent = new StringContent(JsonConvert.SerializeObject(note), System.Text.Encoding.Unicode,
@@ -110,7 +110,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
             {
                 var stringContent = await reponse.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var note = JsonConvert.DeserializeObject<DtoEditNote>(stringContent);
+                var note = JsonConvert.DeserializeObject<EditNote>(stringContent);
                 note.IsDone = true;
 
                 var putStringContent = new StringContent(JsonConvert.SerializeObject(note), System.Text.Encoding.Unicode,

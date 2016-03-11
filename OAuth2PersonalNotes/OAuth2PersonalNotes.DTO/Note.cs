@@ -1,6 +1,6 @@
 ﻿namespace OAuth2PersonalNotes.DTO
 {
-    public class DtoNote : DtoEditNote
+    public class Note : EditNote
     {
     }
 }

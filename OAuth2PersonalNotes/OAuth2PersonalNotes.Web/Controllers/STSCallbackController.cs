@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using IdentityModel.Client;
 using OAuth2PersonalNotes.Share;
@@ -15,7 +16,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
 
             // with the auth code, we can request an access token.
             var client = new TokenClient(
-                Constants.NotesStsRevokeTokenEndpoint,
+                Constants.NotesStsTokenEndpoint,
                 "personalnotesauthcode",
                  Constants.NotesClientSecret); 
 

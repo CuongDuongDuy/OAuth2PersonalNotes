@@ -16,7 +16,7 @@ namespace OAuth2PersonalNotes.Api
                 new IdentityServerBearerTokenAuthenticationOptions
                 {
                     Authority = Constants.NotesSts,
-                    RequiredScopes = new[] { "notesmanagement" }
+                    RequiredScopes = new[] { "notesmanagement", "notesuser" }
                 });
 
             app.UseWebApi(WebApiConfig.Register());

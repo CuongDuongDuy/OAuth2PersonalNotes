@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityServer3.Core.Services.InMemory;
 
 namespace OAuth2PersonalNotes.IdentityServer.Config
@@ -7,21 +8,31 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
     {
         public static List<InMemoryUser> Get()
         {
-            return new List<InMemoryUser>()
+            return new List<InMemoryUser>
             {
 
                 new InMemoryUser
                 {
-                    Username = "Admin",
+                    Username = "Adamin",
                     Password = "secret",
-                    Subject = "b05d3546-6ca8-4d32-b95c-77e94d705ddf"
+                    Subject = "b05d3546-6ca8-4d32-b95c-77e94d705ddf",
+                    Claims = new[]
+                    {
+                        new Claim(ClaimTypes.Email, "Admin@personalnotes.com"),
+                        new Claim(ClaimTypes.Name, "Admin"),
+                    }
                 }
                 ,
                 new InMemoryUser
                 {
-                    Username = "Sven",
+                    Username = "CuongDuong",
                     Password = "secret",
-                    Subject = "bb61e881-3a49-42a7-8b62-c13dbe102018"
+                    Subject = "bb61e881-3a49-42a7-8b62-c13dbe102018",
+                    Claims = new[]
+                    {
+                        new Claim(ClaimTypes.Email, "CuongDuong@personalnotes.com"),
+                        new Claim(ClaimTypes.Name, "CuongDuong"),
+                    }
                 }
             };
         }

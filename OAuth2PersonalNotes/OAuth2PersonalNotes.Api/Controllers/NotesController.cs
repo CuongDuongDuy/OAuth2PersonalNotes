@@ -22,21 +22,21 @@ namespace OAuth2PersonalNotes.Api.Controllers
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<PersonalNote, DtoNote>();
-                cfg.CreateMap<DtoNote, PersonalNote>();
+                cfg.CreateMap<PersonalNote, Note>();
+                cfg.CreateMap<Note, PersonalNote>();
             });
         }
 
         [HttpGet]
         [Route("")]
-        public IQueryable<DtoNote> GetPersonalNotes()
+        public IQueryable<Note> GetPersonalNotes()
         {
-            return db.PersonalNotes.ProjectTo<DtoNote>(Mapper.Configuration);
+            return db.PersonalNotes.ProjectTo<Note>(Mapper.Configuration);
         }
 
         [HttpGet]
         [Route("{id:int}", Name = "GetById")]
-        [ResponseType(typeof(DtoNote))]
+        [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> GetPersonalNote(int id)
         {
             var personalNote = await db.PersonalNotes.FindAsync(id);
@@ -44,13 +44,13 @@ namespace OAuth2PersonalNotes.Api.Controllers
             {
                 return NotFound();
             }
-            var result = Mapper.Map<DtoNote>(personalNote);
+            var result = Mapper.Map<Note>(personalNote);
             return Ok(result);
         }
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IHttpActionResult> PutPersonalNote(int id, DtoNote note)
+        public async Task<IHttpActionResult> PutPersonalNote(int id, Note note)
         {
             if (!ModelState.IsValid)
             {
@@ -94,8 +94,8 @@ namespace OAuth2PersonalNotes.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        [ResponseType(typeof(DtoNote))]
-        public async Task<IHttpActionResult> PostPersonalNote(DtoNote note)
+        [ResponseType(typeof(Note))]
+        public async Task<IHttpActionResult> PostPersonalNote(Note note)
         {
             if (!ModelState.IsValid)
             {
