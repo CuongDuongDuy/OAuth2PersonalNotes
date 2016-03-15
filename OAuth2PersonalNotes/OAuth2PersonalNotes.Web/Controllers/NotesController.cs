@@ -9,6 +9,7 @@ using OAuth2PersonalNotes.Web.Helpers;
 
 namespace OAuth2PersonalNotes.Web.Controllers
 {
+    [Authorize]
     public class NotesController : Controller
     {
         public async Task<ActionResult> Index()
