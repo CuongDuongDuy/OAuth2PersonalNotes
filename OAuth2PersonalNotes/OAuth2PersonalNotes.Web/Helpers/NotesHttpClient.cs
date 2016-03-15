@@ -11,6 +11,7 @@ namespace OAuth2PersonalNotes.Web.Helpers
     {
         public static HttpClient GetClient()
         {
+            user
             var client = new HttpClient {BaseAddress = new Uri(Constants.NotesApi)};
 
             var accessToken = RequestAccessTokenAuthorizationCode();

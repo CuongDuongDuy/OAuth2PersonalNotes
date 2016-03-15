@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -14,6 +16,16 @@ namespace OAuth2PersonalNotes.Web.Controllers
     {
         public async Task<ActionResult> Index()
         {
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var identity = this.User.Identity as ClaimsIdentity;
+                foreach (var claim in identity.Claims)
+                {
+                    Debug.WriteLine(claim.Type + " - " + claim.Value);
+                }
+            }
+
             var httpClient = NotesHttpClient.GetClient();
 
             var response = await httpClient.GetAsync("api/notes").ConfigureAwait(false);

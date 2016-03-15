@@ -18,8 +18,8 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                     Subject = "b05d3546-6ca8-4d32-b95c-77e94d705ddf",
                     Claims = new[]
                     {
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.FamilyName, "Admin"),
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.Name, "Admin"),
+                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.FamilyName, "Adam"),
+                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.GivenName, "Admin"),
                     }
                 }
                 ,
@@ -31,7 +31,7 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                     Claims = new[]
                     {
                         new Claim(IdentityServer3.Core.Constants.ClaimTypes.FamilyName, "Duong"),
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.Name, "Cuong"),
+                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.GivenName, "Cuong"),
                     }
                 }
             };
