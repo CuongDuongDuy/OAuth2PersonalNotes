@@ -10,6 +10,8 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
             return new List<Scope>
                 {          
                     StandardScopes.EmailAlwaysInclude,
+                    StandardScopes.ProfileAlwaysInclude,
+                    StandardScopes.OpenId,
                     new Scope
                     { 
                         Name = "notesmanagement",

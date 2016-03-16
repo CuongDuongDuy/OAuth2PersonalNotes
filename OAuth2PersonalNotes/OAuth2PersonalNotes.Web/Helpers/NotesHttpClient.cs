@@ -13,11 +13,11 @@ namespace OAuth2PersonalNotes.Web.Helpers
         {
             var client = new HttpClient {BaseAddress = new Uri(Constants.NotesApi)};
 
-            var accessToken = RequestAccessTokenAuthorizationCode();
-            if (accessToken != null)
-            {
-                client.SetBearerToken(accessToken);
-            }   
+            //var accessToken = RequestAccessTokenAuthorizationCode();
+            //if (accessToken != null)
+            //{
+            //    client.SetBearerToken(accessToken);
+            //}   
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(

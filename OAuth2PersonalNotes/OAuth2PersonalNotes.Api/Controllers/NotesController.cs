@@ -12,7 +12,6 @@ using OAuth2PersonalNotes.DTO;
 
 namespace OAuth2PersonalNotes.Api.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/Notes")]
     public class NotesController : ApiController
     {
@@ -22,21 +21,21 @@ namespace OAuth2PersonalNotes.Api.Controllers
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<PersonalNote, Note>();
-                cfg.CreateMap<Note, PersonalNote>();
+                cfg.CreateMap<PersonalNote, NoteDto>();
+                cfg.CreateMap<NoteDto, PersonalNote>();
             });
         }
 
         [HttpGet]
         [Route("")]
-        public IQueryable<Note> GetPersonalNotes()
+        public IQueryable<NoteDto> GetPersonalNotes()
         {
-            return db.PersonalNotes.ProjectTo<Note>(Mapper.Configuration);
+            return db.PersonalNotes.ProjectTo<NoteDto>(Mapper.Configuration);
         }
 
         [HttpGet]
         [Route("{id:int}", Name = "GetById")]
-        [ResponseType(typeof(Note))]
+        [ResponseType(typeof(NoteDto))]
         public async Task<IHttpActionResult> GetPersonalNote(int id)
         {
             var personalNote = await db.PersonalNotes.FindAsync(id);
@@ -44,20 +43,20 @@ namespace OAuth2PersonalNotes.Api.Controllers
             {
                 return NotFound();
             }
-            var result = Mapper.Map<Note>(personalNote);
+            var result = Mapper.Map<NoteDto>(personalNote);
             return Ok(result);
         }
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IHttpActionResult> PutPersonalNote(int id, Note note)
+        public async Task<IHttpActionResult> PutPersonalNote(int id, NoteDto noteDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != note.Id)
+            if (id != noteDto.Id)
             {
                 return BadRequest();
             }
@@ -68,10 +67,10 @@ namespace OAuth2PersonalNotes.Api.Controllers
                 return NotFound();
             }
 
-            personalNote.Name = note.Name;
-            personalNote.Description = note.Description;
-            personalNote.IsDone = note.IsDone;
-            personalNote.ReminderDate = note.ReminderDate;
+            personalNote.Name = noteDto.Name;
+            personalNote.Description = noteDto.Description;
+            personalNote.IsDone = noteDto.IsDone;
+            personalNote.ReminderDate = noteDto.ReminderDate;
             personalNote.UpdatedOn = DateTime.UtcNow;
 
             try
@@ -94,22 +93,21 @@ namespace OAuth2PersonalNotes.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        [ResponseType(typeof(Note))]
-        public async Task<IHttpActionResult> PostPersonalNote(Note note)
+        [ResponseType(typeof(NoteDto))]
+        public async Task<IHttpActionResult> PostPersonalNote(NoteDto noteDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var personalNote = Mapper.Map<PersonalNote>(note);
-            personalNote.CreatedBy = "CuongDuong@PersonalNotes.com";
+            var personalNote = Mapper.Map<PersonalNote>(noteDto);
             personalNote.CreatedOn = DateTime.UtcNow;
             db.PersonalNotes.Add(personalNote);
             await db.SaveChangesAsync();
 
-            note.Id = personalNote.Id;
-            return CreatedAtRoute("GetById", new { id = note.Id }, note);
+            noteDto.Id = personalNote.Id;
+            return CreatedAtRoute("GetById", new { id = noteDto.Id }, noteDto);
         }
 
         [HttpDelete]

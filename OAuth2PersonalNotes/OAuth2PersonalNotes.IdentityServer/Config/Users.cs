@@ -18,7 +18,9 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                     Subject = "b05d3546-6ca8-4d32-b95c-77e94d705ddf",
                     Claims = new[]
                     {
-                        new Claim(Constants.ClaimTypes.Email, "Admin@PersonalNotes.com")
+                        new Claim(Constants.ClaimTypes.Email, "Admin@PersonalNotes.com"),
+                        new Claim(Constants.ClaimTypes.FamilyName, "Duong"),
+                        new Claim(Constants.ClaimTypes.GivenName, "Admin")
                     }
 
                 },
@@ -29,7 +31,9 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                     Subject = "bb61e881-3a49-42a7-8b62-c13dbe102018",
                     Claims = new[]
                     {
-                        new Claim(Constants.ClaimTypes.Email, "CuongDuong@PersonalNotes.com")
+                        new Claim(Constants.ClaimTypes.Email, "CuongDuong@PersonalNotes.com"),
+                         new Claim(Constants.ClaimTypes.FamilyName, "Duong"),
+                        new Claim(Constants.ClaimTypes.GivenName, "Cuong")
                     }
                 }
             };

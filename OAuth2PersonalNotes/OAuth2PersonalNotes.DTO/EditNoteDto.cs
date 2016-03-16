@@ -2,7 +2,7 @@
 
 namespace OAuth2PersonalNotes.DTO
 {
-    public class EditNote
+    public class EditNoteDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
