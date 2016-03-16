@@ -54,6 +54,10 @@ input[type="checkbox"].input-validation-error {
     min-height: 100px;
 }
 
+.panel-heading {
+    overflow: hidden;
+}
+
 .no-left-padding {
     padding-left: 0;
 }

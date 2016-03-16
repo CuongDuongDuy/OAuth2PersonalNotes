@@ -103,7 +103,7 @@ namespace OAuth2PersonalNotes.Api.Controllers
             }
 
             var personalNote = Mapper.Map<PersonalNote>(note);
-            personalNote.CreatedBy = "cuongduongduy@sample.com";
+            personalNote.CreatedBy = "CuongDuong@PersonalNotes.com";
             personalNote.CreatedOn = DateTime.UtcNow;
             db.PersonalNotes.Add(personalNote);
             await db.SaveChangesAsync();

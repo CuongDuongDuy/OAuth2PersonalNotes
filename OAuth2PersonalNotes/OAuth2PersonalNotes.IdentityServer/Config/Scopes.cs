@@ -8,15 +8,14 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
         public static IEnumerable<Scope> Get()
         {
             return new List<Scope>
-                {               
-                    StandardScopes.OpenId,
-                    StandardScopes.ProfileAlwaysInclude,
+                {          
+                    StandardScopes.EmailAlwaysInclude,
                     new Scope
                     { 
                         Name = "notesmanagement",
                         DisplayName = "Notes Management",
                         Description = "Allow the application to manage notes on your behalf.",
-                        Type = ScopeType.Resource 
+                        Type = ScopeType.Resource
                     },
                     new Scope
                     { 

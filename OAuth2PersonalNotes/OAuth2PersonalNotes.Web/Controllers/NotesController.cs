@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -11,21 +10,10 @@ using OAuth2PersonalNotes.Web.Helpers;
 
 namespace OAuth2PersonalNotes.Web.Controllers
 {
-    [Authorize]
     public class NotesController : Controller
     {
         public async Task<ActionResult> Index()
         {
-
-            if (this.User.Identity.IsAuthenticated)
-            {
-                var identity = this.User.Identity as ClaimsIdentity;
-                foreach (var claim in identity.Claims)
-                {
-                    Debug.WriteLine(claim.Type + " - " + claim.Value);
-                }
-            }
-
             var httpClient = NotesHttpClient.GetClient();
 
             var response = await httpClient.GetAsync("api/notes").ConfigureAwait(false);
@@ -58,7 +46,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
                 return View("BadRequest");
             }
             var httpClient = NotesHttpClient.GetClient();
-            var stringContent = new StringContent(JsonConvert.SerializeObject(note), System.Text.Encoding.Unicode,
+            var stringContent = new StringContent(JsonConvert.SerializeObject(note), Encoding.Unicode,
                 "application/json");
 
             var reponse = await httpClient.PostAsync("api/notes", stringContent).ConfigureAwait(false);
@@ -97,11 +85,26 @@ namespace OAuth2PersonalNotes.Web.Controllers
         public async Task<ActionResult> Edit(int id, EditNote note)
         {
             var httpClient = NotesHttpClient.GetClient();
-            var stringContent = new StringContent(JsonConvert.SerializeObject(note), System.Text.Encoding.Unicode,
+            var stringContent = new StringContent(JsonConvert.SerializeObject(note), Encoding.Unicode,
                 "application/json");
             var reponse =
                 await httpClient.PutAsync(string.Format("api/notes/{0}", id), stringContent).ConfigureAwait(false);
 
+
+            if (reponse.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Error",
+                new HandleErrorInfo(ExceptionHelper.GetExceptionFromResponse(reponse),
+                    "Notes", "Index"));
+        }
+
+        public async Task<ActionResult> DeleteNote(int id)
+        {
+            var httpClient = NotesHttpClient.GetClient();
+            var reponse =
+                await httpClient.DeleteAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
 
             if (reponse.IsSuccessStatusCode)
             {
@@ -126,7 +129,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
                 var note = JsonConvert.DeserializeObject<EditNote>(stringContent);
                 note.IsDone = true;
 
-                var putStringContent = new StringContent(JsonConvert.SerializeObject(note), System.Text.Encoding.Unicode,
+                var putStringContent = new StringContent(JsonConvert.SerializeObject(note), Encoding.Unicode,
                     "application/json");
                 reponse =
                     await

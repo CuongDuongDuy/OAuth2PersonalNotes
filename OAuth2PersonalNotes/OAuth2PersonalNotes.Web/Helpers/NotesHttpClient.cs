@@ -11,7 +11,6 @@ namespace OAuth2PersonalNotes.Web.Helpers
     {
         public static HttpClient GetClient()
         {
-            user
             var client = new HttpClient {BaseAddress = new Uri(Constants.NotesApi)};
 
             var accessToken = RequestAccessTokenAuthorizationCode();
@@ -28,16 +27,11 @@ namespace OAuth2PersonalNotes.Web.Helpers
 
         private static string RequestAccessTokenAuthorizationCode()
         {
-            // did we store the token before?
             var cookie = HttpContext.Current.Request.Cookies.Get("PersonalNotesCookie");
             if (cookie != null && cookie["access_token"] != null)
             {
                 return cookie["access_token"];
             }
-
-            // no token found - request one
-
-            // we'll pass through the URI we want to return to as state
             var state = HttpContext.Current.Request.Url.OriginalString;
 
             var authorizeRequest = new AuthorizeRequest(

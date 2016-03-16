@@ -7,8 +7,6 @@ namespace OAuth2PersonalNotes.Web.Helpers
     {
         public static Exception GetExceptionFromResponse(HttpResponseMessage response)
         {
-            // unauthorized => missing/bad auth
-            // forbidden => you're authenticated, but you can't do this
             if (response.StatusCode == System.Net.HttpStatusCode.Forbidden
                 || response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {

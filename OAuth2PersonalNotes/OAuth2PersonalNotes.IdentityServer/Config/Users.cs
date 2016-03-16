@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using IdentityServer3.Core;
 using IdentityServer3.Core.Services.InMemory;
-using OAuth2PersonalNotes.Share;
 
 namespace OAuth2PersonalNotes.IdentityServer.Config
 {
@@ -18,11 +18,10 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                     Subject = "b05d3546-6ca8-4d32-b95c-77e94d705ddf",
                     Claims = new[]
                     {
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.FamilyName, "Adam"),
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.GivenName, "Admin"),
+                        new Claim(Constants.ClaimTypes.Email, "Admin@PersonalNotes.com")
                     }
-                }
-                ,
+
+                },
                 new InMemoryUser
                 {
                     Username = "CuongDuong",
@@ -30,12 +29,10 @@ namespace OAuth2PersonalNotes.IdentityServer.Config
                     Subject = "bb61e881-3a49-42a7-8b62-c13dbe102018",
                     Claims = new[]
                     {
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.FamilyName, "Duong"),
-                        new Claim(IdentityServer3.Core.Constants.ClaimTypes.GivenName, "Cuong"),
+                        new Claim(Constants.ClaimTypes.Email, "CuongDuong@PersonalNotes.com")
                     }
                 }
             };
         }
     }
-
 }

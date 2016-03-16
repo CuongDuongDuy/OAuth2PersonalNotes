@@ -16,10 +16,11 @@
         <div class="col-md-4">
             <div class="@pannelClassName">
                 <div class="panel-heading">
-                    <h3 class="panel-title">@item.Name</h3>
+                    <h3 class="panel-title col-sm-10">@item.Name</h3>
+                    @Html.ActionLink("X", "DeleteNote", new { id = item.Id }, new { @class = "btn btn-sm btn-danger pull-right" })
                 </div>
                 <div class="panel-body">
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         @if (item.ReminderDate.Date == DateTime.UtcNow.Date && !item.IsDone)
                         {
                             <i class="fa fa-exclamation-triangle fa-3x fa-color-orange" title="Not done today"></i>
@@ -29,7 +30,7 @@
                             <i class="fa fa-exclamation-triangle fa-3x fa-color-red" title="Not done in past"></i>
                         }
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-10">
                         @item.Description
                     </div>
 
