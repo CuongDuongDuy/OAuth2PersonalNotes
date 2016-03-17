@@ -34,7 +34,7 @@ namespace OAuth2PersonalNotes.Web
                 RedirectUri = Constants.NotesMvc,
                 SignInAsAuthenticationType = "Cookies",
                 ResponseType = "code id_token token",
-                Scope = "openid profile notesuser email",
+                Scope = "openid profile email notesuser",
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
                     SecurityTokenValidated = async n =>
@@ -52,7 +52,7 @@ namespace OAuth2PersonalNotes.Web
                             .Identity.FindFirst(IdentityModel.JwtClaimTypes.Subject);
 
                         var nameClaim = new Claim(IdentityModel.JwtClaimTypes.Name,
-                            string.Format("{0}_{1}", Constants.NotesIssuerUri, subClaim.Value));
+                            string.Format("{0}/{1}", Constants.NotesIssuerUri, subClaim.Value));
 
                         var newClaimsIdentity = new ClaimsIdentity(
                             n.AuthenticationTicket.Identity.AuthenticationType,

@@ -15,15 +15,14 @@ namespace OAuth2PersonalNotes.Web.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            var httpClient = NotesHttpClient.GetClient();
 
-            var response = await httpClient.GetAsync("api/notes").ConfigureAwait(false);
+            var response = await SecuredNotesClient.GetAsync("api/notes").ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
                 var stringContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var notes = JsonConvert.DeserializeObject<IList<NoteDto>>(stringContent).OrderBy(x=>x.ReminderDate).Where(x=>x.CreatedBy == CurrentUser.Email);
+                var notes = JsonConvert.DeserializeObject<IList<NoteDto>>(stringContent).OrderBy(x=>x.ReminderDate).Where(x=>x.CreatedBy == DelegatedUser.Email);
 
                 return View(notes);
             }
@@ -47,12 +46,11 @@ namespace OAuth2PersonalNotes.Web.Controllers
                 return View("BadRequest");
             }
 
-            noteDto.CreatedBy = CurrentUser.Email;
-            var httpClient = NotesHttpClient.GetClient();
+            noteDto.CreatedBy = DelegatedUser.Email;
             var stringContent = new StringContent(JsonConvert.SerializeObject(noteDto), Encoding.Unicode,
                 "application/json");
 
-            var reponse = await httpClient.PostAsync("api/notes", stringContent).ConfigureAwait(false);
+            var reponse = await SecuredNotesClient.PostAsync("api/notes", stringContent).ConfigureAwait(false);
 
             if (reponse.IsSuccessStatusCode)
             {
@@ -67,9 +65,8 @@ namespace OAuth2PersonalNotes.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var httpClient = NotesHttpClient.GetClient();
 
-            var reponse = await httpClient.GetAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
+            var reponse = await SecuredNotesClient.GetAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
 
             if (reponse.IsSuccessStatusCode)
             {
@@ -87,11 +84,10 @@ namespace OAuth2PersonalNotes.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(int id, EditNoteDto noteDto)
         {
-            var httpClient = NotesHttpClient.GetClient();
             var stringContent = new StringContent(JsonConvert.SerializeObject(noteDto), Encoding.Unicode,
                 "application/json");
             var reponse =
-                await httpClient.PutAsync(string.Format("api/notes/{0}", id), stringContent).ConfigureAwait(false);
+                await SecuredNotesClient.PutAsync(string.Format("api/notes/{0}", id), stringContent).ConfigureAwait(false);
 
 
             if (reponse.IsSuccessStatusCode)
@@ -105,9 +101,8 @@ namespace OAuth2PersonalNotes.Web.Controllers
 
         public async Task<ActionResult> DeleteNote(int id)
         {
-            var httpClient = NotesHttpClient.GetClient();
             var reponse =
-                await httpClient.DeleteAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
+                await SecuredNotesClient.DeleteAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
 
             if (reponse.IsSuccessStatusCode)
             {
@@ -121,9 +116,8 @@ namespace OAuth2PersonalNotes.Web.Controllers
         public async Task<ActionResult> MakeNoteDone(int id)
         {
             //Todo: shoud apply patch later
-            var httpClient = NotesHttpClient.GetClient();
 
-            var reponse = await httpClient.GetAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
+            var reponse = await SecuredNotesClient.GetAsync(string.Format("api/notes/{0}", id)).ConfigureAwait(false);
 
             if (reponse.IsSuccessStatusCode)
             {
@@ -136,7 +130,7 @@ namespace OAuth2PersonalNotes.Web.Controllers
                     "application/json");
                 reponse =
                     await
-                        httpClient.PutAsync(string.Format("api/notes/{0}", id), putStringContent).ConfigureAwait(false);
+                        SecuredNotesClient.PutAsync(string.Format("api/notes/{0}", id), putStringContent).ConfigureAwait(false);
 
                 if (reponse.IsSuccessStatusCode)
                 {

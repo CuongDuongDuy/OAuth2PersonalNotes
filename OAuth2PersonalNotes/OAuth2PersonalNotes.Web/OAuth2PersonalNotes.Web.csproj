@@ -144,7 +144,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Models\CurrentUserInfo.cs" />
+    <Compile Include="Models\DelegatedUser.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\STSCallbackController.cs" />
     <Compile Include="Controllers\UserAccountController.cs" />
@@ -152,7 +152,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExceptionHelper.cs" />
-    <Compile Include="Helpers\NotesHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
