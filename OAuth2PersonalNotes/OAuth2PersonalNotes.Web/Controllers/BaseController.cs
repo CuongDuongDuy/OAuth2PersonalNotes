@@ -21,10 +21,10 @@ namespace OAuth2PersonalNotes.Web.Controllers
                     var claimIdentity = (User.Identity) as ClaimsIdentity;
                     delegatedUser = new DelegatedUser
                     {
-                        Email = claimIdentity == null || claimIdentity.FindFirst("email") == null ? "" : claimIdentity.FindFirst("email").Value,
-                        FirstName =  claimIdentity == null || claimIdentity.FindFirst("given_name") == null ? "" : claimIdentity.FindFirst("given_name").Value,
-                        LastName =  claimIdentity == null || claimIdentity.FindFirst("family_name") == null ? "" : claimIdentity.FindFirst("family_name").Value,
-                        AccessToken = claimIdentity == null || claimIdentity.FindFirst("access_token") == null ? "" : claimIdentity.FindFirst("access_token").Value,
+                        Email = claimIdentity?.FindFirst("email") == null ? "" : claimIdentity.FindFirst("email").Value,
+                        FirstName =  claimIdentity?.FindFirst("given_name") == null ? "" : claimIdentity.FindFirst("given_name").Value,
+                        LastName =  claimIdentity?.FindFirst("family_name") == null ? "" : claimIdentity.FindFirst("family_name").Value,
+                        AccessToken = claimIdentity?.FindFirst("access_token") == null ? "" : claimIdentity.FindFirst("access_token").Value,
                     };
                 }
                 return delegatedUser;
