@@ -17,5 +17,8 @@
         public const string NotesStsUserInfoEndpoint = NotesSts + "/connect/userinfo";
         public const string NotesStsEndSessionEndpoint = NotesSts + "/connect/endsession";
         public const string NotesStsRevokeTokenEndpoint = NotesSts + "/connect/revocation";
+
+        public const string NotesAdminRole = "PersonalNotesAdmin";
+        public const string NotesUserRole = "PersonalNotesUser";
     }
 }

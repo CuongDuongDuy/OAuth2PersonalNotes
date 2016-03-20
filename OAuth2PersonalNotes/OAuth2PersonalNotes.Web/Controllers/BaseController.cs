@@ -2,12 +2,16 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Web;
 using System.Web.Mvc;
+using IdentityModel;
 using OAuth2PersonalNotes.Share;
+using OAuth2PersonalNotes.Web.AuthorizationMiddleware.Models;
 using OAuth2PersonalNotes.Web.Models;
 
 namespace OAuth2PersonalNotes.Web.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
         private DelegatedUser delegatedUser;
@@ -21,9 +25,9 @@ namespace OAuth2PersonalNotes.Web.Controllers
                     var claimIdentity = (User.Identity) as ClaimsIdentity;
                     delegatedUser = new DelegatedUser
                     {
-                        Email = claimIdentity?.FindFirst("email") == null ? "" : claimIdentity.FindFirst("email").Value,
-                        FirstName =  claimIdentity?.FindFirst("given_name") == null ? "" : claimIdentity.FindFirst("given_name").Value,
-                        LastName =  claimIdentity?.FindFirst("family_name") == null ? "" : claimIdentity.FindFirst("family_name").Value,
+                        Email = claimIdentity?.FindFirst(JwtClaimTypes.Email) == null ? "" : claimIdentity.FindFirst(JwtClaimTypes.Email).Value,
+                        FirstName =  claimIdentity?.FindFirst(JwtClaimTypes.GivenName) == null ? "" : claimIdentity.FindFirst(JwtClaimTypes.GivenName).Value,
+                        LastName =  claimIdentity?.FindFirst(JwtClaimTypes.FamilyName) == null ? "" : claimIdentity.FindFirst(JwtClaimTypes.FamilyName).Value,
                         AccessToken = claimIdentity?.FindFirst("access_token") == null ? "" : claimIdentity.FindFirst("access_token").Value,
                     };
                 }
